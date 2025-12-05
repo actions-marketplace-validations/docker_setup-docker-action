@@ -1,4 +1,6 @@
 import {beforeEach, describe, expect, test} from '@jest/globals';
+import * as os from 'os';
+import * as path from 'path';
 
 import * as context from '../src/context';
 
@@ -30,7 +32,9 @@ describe('getInputs', () => {
         context: '',
         daemonConfig: '',
         rootless: false,
-        setHost: false
+        setHost: false,
+        runtimeBasedir: path.join(os.homedir(), `setup-docker-action`),
+        githubToken: '',
       } as context.Inputs
     ],
     [
@@ -52,7 +56,9 @@ describe('getInputs', () => {
         context: 'foo',
         daemonConfig: `{"debug":true,"features":{"containerd-snapshotter":true}}`,
         rootless: false,
-        setHost: false
+        setHost: false,
+        runtimeBasedir: path.join(os.homedir(), `setup-docker-action`),
+        githubToken: '',
       } as context.Inputs
     ],
     [
@@ -70,7 +76,9 @@ describe('getInputs', () => {
         context: '',
         daemonConfig: '',
         rootless: false,
-        setHost: true
+        setHost: true,
+        runtimeBasedir: path.join(os.homedir(), `setup-docker-action`),
+        githubToken: '',
       } as context.Inputs
     ],
     [
@@ -90,7 +98,9 @@ describe('getInputs', () => {
         context: 'foo',
         daemonConfig: `{"debug":true,"features":{"containerd-snapshotter":true}}`,
         rootless: false,
-        setHost: false
+        setHost: false,
+        runtimeBasedir: path.join(os.homedir(), `setup-docker-action`),
+        githubToken: '',
       } as context.Inputs
     ],
     [
@@ -108,7 +118,9 @@ describe('getInputs', () => {
         context: '',
         daemonConfig: '',
         rootless: false,
-        setHost: false
+        setHost: false,
+        runtimeBasedir: path.join(os.homedir(), `setup-docker-action`),
+        githubToken: '',
       } as context.Inputs
     ],
     [
@@ -128,6 +140,8 @@ describe('getInputs', () => {
         context: '',
         daemonConfig: '',
         rootless: false,
+        runtimeBasedir: path.join(os.homedir(), `setup-docker-action`),
+        githubToken: '',
       } as context.Inputs
     ],
     [
@@ -147,6 +161,8 @@ describe('getInputs', () => {
         context: '',
         daemonConfig: '',
         rootless: false,
+        runtimeBasedir: path.join(os.homedir(), `setup-docker-action`),
+        githubToken: '',
       } as context.Inputs
     ],
     [
@@ -165,6 +181,8 @@ describe('getInputs', () => {
         context: '',
         daemonConfig: '',
         rootless: false,
+        runtimeBasedir: path.join(os.homedir(), `setup-docker-action`),
+        githubToken: '',
       } as context.Inputs
     ],
     [
@@ -183,6 +201,8 @@ describe('getInputs', () => {
         context: '',
         daemonConfig: '',
         rootless: true,
+        runtimeBasedir: path.join(os.homedir(), `setup-docker-action`),
+        githubToken: '',
       } as context.Inputs
     ],
     [
@@ -203,7 +223,9 @@ describe('getInputs', () => {
         daemonConfig: '',
         tcpPort: 2378,
         rootless: false,
-        setHost: false
+        setHost: false,
+        runtimeBasedir: path.join(os.homedir(), `setup-docker-action`),
+        githubToken: '',
       } as context.Inputs
     ],
   ])(

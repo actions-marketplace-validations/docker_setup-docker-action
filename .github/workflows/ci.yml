@@ -29,8 +29,7 @@ jobs:
         os:
           - ubuntu-latest
           - ubuntu-24.04-arm
-          #- macos-14  # no virt: https://github.com/docker/actions-toolkit/issues/317
-          - macos-13
+          - macos-15-intel
           - windows-latest
         version:
           - ""
@@ -39,7 +38,7 @@ jobs:
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       -
         name: Set up Docker
         uses: ./
@@ -54,13 +53,12 @@ jobs:
         os:
           - ubuntu-latest
           - ubuntu-24.04-arm
-          #- macos-14  # no virt: https://github.com/docker/actions-toolkit/issues/317
-          - macos-13
+          - macos-15-intel
           - windows-latest
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       -
         name: Set up Docker
         uses: ./
@@ -76,13 +74,12 @@ jobs:
         os:
           - ubuntu-latest
           - ubuntu-24.04-arm
-          #- macos-14  # no virt: https://github.com/docker/actions-toolkit/issues/317
-          - macos-13
+          - macos-15-intel
           - windows-latest
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       -
         name: Set up Docker
         uses: ./
@@ -104,13 +101,12 @@ jobs:
         os:
           - ubuntu-latest
           - ubuntu-24.04-arm
-          #- macos-14  # no virt: https://github.com/docker/actions-toolkit/issues/317
-          - macos-13
+          - macos-15-intel
           - windows-latest
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       -
         name: Set up Docker
         uses: ./
@@ -123,12 +119,11 @@ jobs:
           docker context inspect foo
 
   lima-start-args:
-    #runs-on: macos-14  # no virt: https://github.com/docker/actions-toolkit/issues/317
-    runs-on: macos-13
+    runs-on: macos-15-intel
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       -
         name: Set up Docker
         uses: ./
@@ -148,7 +143,7 @@ jobs:
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       -
         name: Uninstall containerd
         if: matrix.containerd == 'containerd-tarball'
@@ -188,12 +183,11 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          #- macos-14  # no virt: https://github.com/docker/actions-toolkit/issues/317
-          - macos-13
+          - macos-15-intel
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       -
         name: Set up Docker
         uses: ./
@@ -227,7 +221,7 @@ jobs:
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       -
         name: Set up Docker
         uses: ./
@@ -248,7 +242,7 @@ jobs:
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       -
         name: Set up Docker
         uses: ./
@@ -265,7 +259,7 @@ jobs:
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       -
         name: Set up Docker
         uses: ./
@@ -285,13 +279,12 @@ jobs:
         os:
           - ubuntu-latest
           - ubuntu-24.04-arm
-          #- macos-14  # no virt: https://github.com/docker/actions-toolkit/issues/317
-          - macos-13
+          - macos-15-intel
           - windows-latest
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       -
         name: Set up Docker
         id: setup_docker
@@ -305,3 +298,47 @@ jobs:
           docker info
         env:
           DOCKER_HOST: ${{ steps.setup_docker.outputs.tcp }}
+
+  undock-regctl-version:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        undock_version:
+          - ''
+          - v0.9.0
+        regctl_version:
+          - ''
+          - v0.8.2
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v6
+      -
+        name: Set up Docker
+        uses: ./
+        with:
+          version: type=image
+        env:
+          UNDOCK_VERSION: ${{ matrix.undock_version }}
+          REGCTL_VERSION: ${{ matrix.regctl_version }}
+
+  docker-29:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-15-intel
+          - windows-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v6
+      -
+        name: Set up Docker
+        uses: ./
+        with:
+          version: v29.0.0-rc.1
+          channel: test
